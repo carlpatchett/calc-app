@@ -9,6 +9,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder => builder.WithOrigins("http://localhost:4200")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials()
+        .SetIsOriginAllowed((host) => true));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
