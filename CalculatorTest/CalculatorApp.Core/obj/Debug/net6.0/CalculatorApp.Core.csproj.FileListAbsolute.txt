@@ -1,0 +1,12 @@
+D:\Repos\technical-test-calculator-app\calc-app\CalculatorTest\CalculatorApp.Core\bin\Debug\net6.0\CalculatorApp.Core.deps.json
+D:\Repos\technical-test-calculator-app\calc-app\CalculatorTest\CalculatorApp.Core\bin\Debug\net6.0\CalculatorApp.Core.dll
+D:\Repos\technical-test-calculator-app\calc-app\CalculatorTest\CalculatorApp.Core\bin\Debug\net6.0\CalculatorApp.Core.pdb
+D:\Repos\technical-test-calculator-app\calc-app\CalculatorTest\CalculatorApp.Core\obj\Debug\net6.0\CalculatorApp.Core.csproj.AssemblyReference.cache
+D:\Repos\technical-test-calculator-app\calc-app\CalculatorTest\CalculatorApp.Core\obj\Debug\net6.0\CalculatorApp.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\Repos\technical-test-calculator-app\calc-app\CalculatorTest\CalculatorApp.Core\obj\Debug\net6.0\CalculatorApp.Core.AssemblyInfoInputs.cache
+D:\Repos\technical-test-calculator-app\calc-app\CalculatorTest\CalculatorApp.Core\obj\Debug\net6.0\CalculatorApp.Core.AssemblyInfo.cs
+D:\Repos\technical-test-calculator-app\calc-app\CalculatorTest\CalculatorApp.Core\obj\Debug\net6.0\CalculatorApp.Core.csproj.CoreCompileInputs.cache
+D:\Repos\technical-test-calculator-app\calc-app\CalculatorTest\CalculatorApp.Core\obj\Debug\net6.0\CalculatorApp.Core.dll
+D:\Repos\technical-test-calculator-app\calc-app\CalculatorTest\CalculatorApp.Core\obj\Debug\net6.0\refint\CalculatorApp.Core.dll
+D:\Repos\technical-test-calculator-app\calc-app\CalculatorTest\CalculatorApp.Core\obj\Debug\net6.0\CalculatorApp.Core.pdb
+D:\Repos\technical-test-calculator-app\calc-app\CalculatorTest\CalculatorApp.Core\obj\Debug\net6.0\ref\CalculatorApp.Core.dll
