@@ -13,7 +13,7 @@ namespace CalculatorApp.Tests
         public void Initialize()
         {
             mCalculator = new Calculator();
-            mRandom = new Random(12345);
+            mRandom = new Random();
         }
 
         [TestMethod]
