@@ -37,6 +37,7 @@ namespace CalculatorApp.Tests
             {
                 Assert.Fail($"{GetMethodName()} failed due to bad initialization.");
             }
+
             var firstNumber = mRandom.Next(1000);
             var secondNumber = mRandom.Next(1000);
             var result = mCalculator.Subtract(firstNumber, secondNumber);
@@ -51,6 +52,7 @@ namespace CalculatorApp.Tests
             {
                 Assert.Fail($"{GetMethodName()} failed due to bad initialization.");
             }
+
             var firstNumber = mRandom.Next(1000);
             var secondNumber = mRandom.Next(1000);
             var result = mCalculator.Multiply(firstNumber, secondNumber);
@@ -65,6 +67,7 @@ namespace CalculatorApp.Tests
             {
                 Assert.Fail($"{GetMethodName()} failed due to bad initialization.");
             }
+
             var firstNumber = mRandom.Next(1000);
             var secondNumber = mRandom.Next(1000);
             var result = mCalculator.Divide(firstNumber, secondNumber);

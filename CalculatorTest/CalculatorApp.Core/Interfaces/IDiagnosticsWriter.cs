@@ -5,6 +5,6 @@
     /// </summary>
     public interface IDiagnosticsWriter
     {
-        void WriteToDebugger(string message);
+        void WriteToDebugger(string category, object value);
     }
 }
