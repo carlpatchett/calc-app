@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorApp.Core", "CalculatorApp.Core\CalculatorApp.Core.csproj", "{2050C1E2-85F1-4E70-AFA2-5D2AED01E60F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculatorApp.Core", "CalculatorApp.Core\CalculatorApp.Core.csproj", "{2050C1E2-85F1-4E70-AFA2-5D2AED01E60F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorApp.Tests", "CalculatorApp.Tests\CalculatorApp.Tests.csproj", "{99F12ACC-7475-4D71-B3F6-B4A13865F246}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculatorApp.Tests", "CalculatorApp.Tests\CalculatorApp.Tests.csproj", "{99F12ACC-7475-4D71-B3F6-B4A13865F246}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorApp.Web.Server", "CalculatorApp.Web.Server\CalculatorApp.Web.Server.csproj", "{E13C141B-FAF8-420D-83C0-CB2183478722}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{99F12ACC-7475-4D71-B3F6-B4A13865F246}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99F12ACC-7475-4D71-B3F6-B4A13865F246}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99F12ACC-7475-4D71-B3F6-B4A13865F246}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E13C141B-FAF8-420D-83C0-CB2183478722}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E13C141B-FAF8-420D-83C0-CB2183478722}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E13C141B-FAF8-420D-83C0-CB2183478722}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E13C141B-FAF8-420D-83C0-CB2183478722}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
