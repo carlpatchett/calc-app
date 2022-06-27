@@ -17,11 +17,43 @@ namespace CalculatorApp.Web.Server.Controllers
             mLogger = logger;
         }
 
-        [HttpGet("RetrieveLatestResult", Name = "RetrieveLatestResult")]
-        public IActionResult RetrieveLatestResult()
+        [HttpGet("GetLatest", Name = "GetLatest")]
+        public IActionResult GetLatest()
         {
             this.Log($"Retrieving latest result");
-            return Ok(mOperationDatabaseStorageHandler.RetrieveLatestOperation());
+            var op = mOperationDatabaseStorageHandler.GetLatest();
+
+            if (op != null)
+            {
+                return Ok(op);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("Get", Name = "Get")]
+        public IActionResult Get()
+        {
+            this.Log($"Getting all results");
+            return Ok(mOperationDatabaseStorageHandler.Get());
+        }
+
+        [HttpGet("Get/{id}", Name = "Get/{id}")]
+        public IActionResult Get(int id)
+        {
+            this.Log($"Getting specified result");
+            var op = mOperationDatabaseStorageHandler.Get(id);
+
+            if (op != null)
+            {
+                return Ok(op);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost("Store", Name = "Store")]
@@ -29,7 +61,7 @@ namespace CalculatorApp.Web.Server.Controllers
         {
             var typedOperation = JsonConvert.DeserializeObject<Operation>(operation.ToString());
             this.Log($"Retrieving latest result");
-            mOperationDatabaseStorageHandler.StoreOperation(this, typedOperation);
+            mOperationDatabaseStorageHandler.Store(typedOperation);
 
             return Ok();
         }

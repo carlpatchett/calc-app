@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-storage',
@@ -12,17 +13,52 @@ export class StorageComponent implements OnInit {
   latestResult: OperationForUi | undefined;
 
   operationToStore: OperationForUi | undefined;
+  operations: OperationForUi[] | undefined;
+  operation: OperationForUi | undefined;
+  operationIdToGet: number | undefined;
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
   }
 
-  RetrieveLatestResult(): void {
+  GetLatest(): void {
 
-    this.http.get<OperationFromDatabase>(`${this.mStorageConnectionString}/RetrieveLatestResult`)
+    this.http.get<OperationFromDatabase>(`${this.mStorageConnectionString}/GetLatest`)
     .subscribe(result =>  {
       this.latestResult = {
+        operator: ArithmeticOperators[result.operator],
+        x: result.x,
+        y: result.y,
+        result: result.result
+      };
+    });
+  }
+
+  Get(id?: number): void {
+
+    if (id === undefined) {
+      this.operations = [];
+
+      this.http.get<OperationFromDatabase[]>(`${this.mStorageConnectionString}/Get`)
+        .subscribe(result =>
+          {
+            result.forEach(result => {
+              this.operations?.push({
+                operator: ArithmeticOperators[result.operator],
+                x: result.x,
+                y: result.y,
+                result: result.result
+              })
+            });
+          });
+
+          return;
+    }
+
+    this.http.get<OperationFromDatabase>(`${this.mStorageConnectionString}/Get/${id}`)
+    .subscribe(result =>  {
+      this.operation = {
         operator: ArithmeticOperators[result.operator],
         x: result.x,
         y: result.y,

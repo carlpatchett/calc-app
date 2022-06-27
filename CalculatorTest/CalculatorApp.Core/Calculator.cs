@@ -71,7 +71,7 @@ namespace CalculatorApp.Core
             Debug.Write(operation.y, "Y");
             Debug.Write(operation.result, "Result");
 
-            this.StoreOperation(this, operation);
+            this.Store(operation);
         }
 
         public void EnsureDb()
@@ -94,11 +94,11 @@ namespace CalculatorApp.Core
             }
         }
 
-        public Operation RetrieveLatestOperation()
+        public Operation? GetLatest()
         {
             this.EnsureDb();
 
-            object? operation = null;
+            Operation? operation = null;
             using (var connection = new SqlConnection(mConnectionString))
             {
                 connection.Open();
@@ -111,12 +111,7 @@ namespace CalculatorApp.Core
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    var @operator = (ArithmeticOperators)Enum.Parse(typeof(ArithmeticOperators), reader[1].ToString());
-                    var x = int.Parse(reader[2].ToString());
-                    var y = int.Parse(reader[3].ToString());
-                    var result = float.Parse(reader[4].ToString());
-
-                    operation = new Operation(@operator, x, y, result);
+                    operation = ConstructOperation(reader);
                 }
 
                 reader.Close();
@@ -130,7 +125,60 @@ namespace CalculatorApp.Core
             return (Operation)operation;
         }
 
-        public void StoreOperation(object? sender, Operation operation)
+        public IEnumerable<Operation> Get()
+        {
+            this.EnsureDb();
+
+            var operations = new List<Operation>();
+            using (var connection = new SqlConnection(mConnectionString))
+            {
+                connection.Open();
+
+                using var cmd = connection.CreateCommand();
+                cmd.CommandText = $"SELECT * FROM dbo.{mDiagnosticsTableName}";
+
+                cmd.ExecuteNonQuery();
+
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    operations.Add(ConstructOperation(reader));
+                }
+
+                reader.Close();
+            }
+
+            return operations;
+        }
+
+        public Operation? Get(int id)
+        {
+            this.EnsureDb();
+
+            Operation? operation = null;
+            using (var connection = new SqlConnection(mConnectionString))
+            {
+                connection.Open();
+
+                using var cmd = connection.CreateCommand();
+                cmd.CommandText = $"SELECT * FROM dbo.{mDiagnosticsTableName} WHERE Id=@id";
+                this.CreateAndAddParameter(cmd, "@id", id);
+
+                cmd.ExecuteNonQuery();
+
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    operation = ConstructOperation(reader);
+                }
+
+                reader.Close();
+            }
+
+            return operation;
+        }
+
+        public void Store(Operation operation)
         {
             this.EnsureDb();
 
@@ -147,6 +195,16 @@ namespace CalculatorApp.Core
 
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        private static Operation ConstructOperation(SqlDataReader? reader)
+        {
+            var @operator = (ArithmeticOperators)Enum.Parse(typeof(ArithmeticOperators), reader[1].ToString());
+            var x = int.Parse(reader[2].ToString());
+            var y = int.Parse(reader[3].ToString());
+            var result = float.Parse(reader[4].ToString());
+
+            return new Operation(@operator, x, y, result);
         }
 
         private void CreateAndAddParameter(SqlCommand command, string name, object value)

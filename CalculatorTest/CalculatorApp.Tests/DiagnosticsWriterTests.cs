@@ -30,18 +30,20 @@
             mDiagnosticsWriter.WriteToDebugger(operationToWrite);
 
             // Retrieve the most recent operation added to the DB
-            var latestOperation = mDiagnosticsWriter.RetrieveLatestOperation();
+            var latestOperation = mDiagnosticsWriter.GetLatest();
+
+            if (latestOperation == null)
+            {
+                Assert.Fail("Latest operation could not be retrieved.");
+            }
 
             // Ensure it matches the one we just wrote to the debugger
-            Assert.AreEqual(operationToWrite.@operator, latestOperation.@operator);
-            Assert.AreEqual(operationToWrite.x, latestOperation.x);
-            Assert.AreEqual(operationToWrite.y, latestOperation.y);
-            Assert.AreEqual(operationToWrite.result, latestOperation.result);
+            Assert.AreEqual(operationToWrite.@operator, latestOperation.Value.@operator);
+            Assert.AreEqual(operationToWrite.x, latestOperation.Value.x);
+            Assert.AreEqual(operationToWrite.y, latestOperation.Value.y);
+            Assert.AreEqual(operationToWrite.result, latestOperation.Value.result);
         }
 
-        private static string GetMethodName()
-        {
-            return System.Reflection.MethodBase.GetCurrentMethod().Name;
-        }
+        private static string GetMethodName() => System.Reflection.MethodBase.GetCurrentMethod().Name;
     }
 }

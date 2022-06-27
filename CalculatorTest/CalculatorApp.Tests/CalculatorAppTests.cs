@@ -75,9 +75,6 @@ namespace CalculatorApp.Tests
             Assert.AreEqual(firstNumber / secondNumber, result);
         }
 
-        private static string GetMethodName()
-        {
-            return System.Reflection.MethodBase.GetCurrentMethod().Name;
-        }
+        private static string GetMethodName() => System.Reflection.MethodBase.GetCurrentMethod().Name;
     }
 }

@@ -11,7 +11,7 @@ namespace CalculatorApp.Tests
 
         public void WriteToDebugger(Operation operation)
         {
-            this.StoreOperation(this, operation);
+            this.Store(operation);
         }
 
         public void EnsureDb()
@@ -34,11 +34,11 @@ namespace CalculatorApp.Tests
             }
         }
 
-        public Operation RetrieveLatestOperation()
+        public Operation? GetLatest()
         {
             this.EnsureDb();
 
-            object? operation = null;
+            Operation? operation = null;
             using (var connection = new SqlConnection(mConnectionString))
             {
                 connection.Open();
@@ -51,12 +51,7 @@ namespace CalculatorApp.Tests
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    var @operator = (ArithmeticOperators)Enum.Parse(typeof(ArithmeticOperators), reader[1].ToString());
-                    var x = int.Parse(reader[2].ToString());
-                    var y = int.Parse(reader[3].ToString());
-                    var result = float.Parse(reader[4].ToString());
-
-                    operation = new Operation(@operator, x, y, result);
+                    operation = ConstructOperation(reader);
                 }
 
                 reader.Close();
@@ -70,7 +65,60 @@ namespace CalculatorApp.Tests
             return (Operation)operation;
         }
 
-        public void StoreOperation(object? sender, Operation operation)
+        public IEnumerable<Operation> Get()
+        {
+            this.EnsureDb();
+
+            var operations = new List<Operation>();
+            using (var connection = new SqlConnection(mConnectionString))
+            {
+                connection.Open();
+
+                using var cmd = connection.CreateCommand();
+                cmd.CommandText = $"SELECT * FROM dbo.{mDiagnosticsTableName}";
+
+                cmd.ExecuteNonQuery();
+
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    operations.Add(ConstructOperation(reader));
+                }
+
+                reader.Close();
+            }
+
+            return operations;
+        }
+
+        public Operation? Get(int id)
+        {
+            this.EnsureDb();
+
+            Operation? operation = null;
+            using (var connection = new SqlConnection(mConnectionString))
+            {
+                connection.Open();
+
+                using var cmd = connection.CreateCommand();
+                cmd.CommandText = $"SELECT * FROM dbo.{mDiagnosticsTableName} WHERE Id=@id";
+                this.CreateAndAddParameter(cmd, "@id", id);
+
+                cmd.ExecuteNonQuery();
+
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    operation = ConstructOperation(reader);
+                }
+
+                reader.Close();
+            }
+
+            return operation;
+        }
+
+        public void Store(Operation operation)
         {
             this.EnsureDb();
 
@@ -80,13 +128,23 @@ namespace CalculatorApp.Tests
 
                 using var cmd = connection.CreateCommand();
                 cmd.CommandText = $"INSERT INTO [{mDiagnosticsTableName}]( [Operator],[X],[Y],[Result] ) VALUES (@operator, @x, @y, @result)";
-                CreateAndAddParameter(cmd, "@operator", @operation.@operator.ToString());
-                CreateAndAddParameter(cmd, "@x", @operation.x);
-                CreateAndAddParameter(cmd, "@y", @operation.y);
-                CreateAndAddParameter(cmd, "@result", @operation.result);
+                this.CreateAndAddParameter(cmd, "@operator", @operation.@operator.ToString());
+                this.CreateAndAddParameter(cmd, "@x", @operation.x);
+                this.CreateAndAddParameter(cmd, "@y", @operation.y);
+                this.CreateAndAddParameter(cmd, "@result", @operation.result);
 
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        private static Operation ConstructOperation(SqlDataReader? reader)
+        {
+            var @operator = (ArithmeticOperators)Enum.Parse(typeof(ArithmeticOperators), reader[1].ToString());
+            var x = int.Parse(reader[2].ToString());
+            var y = int.Parse(reader[3].ToString());
+            var result = float.Parse(reader[4].ToString());
+
+            return new Operation(@operator, x, y, result);
         }
 
         private void CreateAndAddParameter(SqlCommand command, string name, object value)

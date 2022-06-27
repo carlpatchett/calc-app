@@ -1,6 +1,6 @@
-<div>
+<div class="groove">
   <div>
-    <input type="button" value="Retrieve Latest Result" (click)="RetrieveLatestResult()" id="retrieve-latest-button" />
+    <input type="button" value="Retrieve Latest Result" (click)="GetLatest()" id="retrieve-latest-button" />
   </div>
   <div *ngIf="latestResult">
     <label>Latest Result:</label>
@@ -18,11 +18,48 @@
     </div>
   </div>
 </div>
-<div>
+<div class="groove">
   <div *ngIf="operationToStore">
     <input type="button" value="Store Operation" (click)="Store(operationToStore)" id="store-operation-button" />
   </div>
   <div>
     <input id="store-operation-input" [(ngModel)]="operationToStore">
+  </div>
+</div>
+<div class="groove">
+  <input id="get-operation-input" [(ngModel)]="operationIdToGet">
+  <input type="button" value="Get Specific Result" (click)="Get(operationIdToGet)" id="get-operation-button" />
+  <div *ngIf="operation">
+    <div>
+      <label>Operator: {{ operation.operator }}</label>
+    </div>
+    <div>
+      <label>X: {{ operation.x }}</label>
+    </div>
+    <div>
+      <label>Y: {{ operation.y }}</label>
+    </div>
+    <div>
+      <label>Result: {{ operation.result }}</label>
+    </div>
+  </div>
+</div>
+<div class="groove">
+  <input type="button" value="Get Results" (click)="Get()" id="get-operations-button" />
+  <div *ngIf="operations">
+    <div *ngFor="let operation of operations" class="groove">
+      <div>
+        <label>Operator: {{ operation.operator }}</label>
+      </div>
+      <div>
+        <label>X: {{ operation.x }}</label>
+      </div>
+      <div>
+        <label>Y: {{ operation.y }}</label>
+      </div>
+      <div>
+        <label>Result: {{ operation.result }}</label>
+      </div>
+    </div>
   </div>
 </div>
