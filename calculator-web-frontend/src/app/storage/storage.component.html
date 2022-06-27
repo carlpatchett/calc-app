@@ -1,0 +1,28 @@
+<div>
+  <div>
+    <input type="button" value="Retrieve Latest Result" (click)="RetrieveLatestResult()" id="retrieve-latest-button" />
+  </div>
+  <div *ngIf="latestResult">
+    <label>Latest Result:</label>
+    <div>
+      <label>Operator: {{ latestResult.operator }}</label>
+    </div>
+    <div>
+      <label>X: {{ latestResult.x }}</label>
+    </div>
+    <div>
+      <label>Y: {{ latestResult.y }}</label>
+    </div>
+    <div>
+      <label>Result: {{ latestResult.result }}</label>
+    </div>
+  </div>
+</div>
+<div>
+  <div *ngIf="operationToStore">
+    <input type="button" value="Store Operation" (click)="Store(operationToStore)" id="store-operation-button" />
+  </div>
+  <div>
+    <input id="store-operation-input" [(ngModel)]="operationToStore">
+  </div>
+</div>

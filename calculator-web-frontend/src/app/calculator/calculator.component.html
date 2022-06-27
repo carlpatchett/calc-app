@@ -11,5 +11,11 @@
   <input type="button" value="Multiply" (click)="Multiply(calculator.numberOne, calculator.numberTwo)" id="multiply-button" />
   <input type="button" value="Divide" (click)="Divide(calculator.numberOne, calculator.numberTwo)" id="divide-button" />
 
-  <p>{{ calculator.result }}</p>
+  <div>
+    <label>Result: {{ calculator.result }}</label>
+  </div>
+</div>
+
+<div>
+  <app-storage></app-storage>
 </div>
